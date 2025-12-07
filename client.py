@@ -19,20 +19,12 @@ def add_client(n):
         liste1.append(client)
     return liste1
 
-def display_client(liste1):
-    print("\t==== LISTE DES CLIENTS ====\n")
-    for j in range(len(liste1)):
-       print(f"ID:: {liste1.id}, Name : {liste1.name}")
-
-
-
-
 class Client:
     def __init__(self, id, name, genre, tel):
-        self.__id = None
-        self.__name = name
+        self.__id = id
+        self._name = name
         self.genre = genre
-        self.__tel = tel
+        self._tel = tel
         self.liste1 = []
 
     # def add_client(self, lent):
@@ -49,17 +41,32 @@ class Client:
     #         print(f"  {self.id}:\n --Name: {self.name}\n --Genre: {self.genre}\n --Tel: {self.tel}\n")
 
 
-    def get_id(self):
-        return self.__id
-    def get_name(self):
-        return self.__name
-    def get_tel(self):
-        return self.__tel
+    def get(self):
+        return {
+            "id": self.__id,
+            "name": self._name,
+            "tel": self._tel
+        }
 
-    def set_name(self, name):
-        self.__name = name
-    def set_tel(self, tel):
-         self.__tel = tel
+    def set(self,name, tel):
+        if name is not None:
+            self._name = name
+        if tel is not None:
+            self._tel = tel
+
+
+def display_client(liste_clients):
+    if not liste_clients:
+        print("Aucun client à afficher.")
+        return
+
+    print("\n----- LISTE DES CLIENTS -----\n")
+    for client in liste_clients:
+        data = client.get()
+        print(f"ID : {data['id']}")
+        print(f"Nom : {data['name']}")
+        print(f"Téléphone : {data['tel']}")
+        print("------------------------------")
 
 
 # k= Client(id, name= None,genre = None,tel = None )
@@ -68,3 +75,5 @@ class Client:
 taille = int(input("n:"))
 
 liste = add_client(taille)
+
+display_client(liste)
